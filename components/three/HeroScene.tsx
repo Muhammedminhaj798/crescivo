@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import "./console";
 import { GL_FLAGS } from "./SceneMount";
-import { Warmup } from "./Warmup";
+import { FitViewport, Warmup } from "./helpers";
 
 type Props = { onReady: () => void; reduced: boolean; mobile: boolean; active: boolean };
 
@@ -365,6 +365,7 @@ export default function HeroScene({ onReady, reduced, mobile, active }: Props) {
       <Field mobile={mobile} reduced={reduced} clock={clock} />
       <Conduits reduced={reduced} clock={clock} />
       <Warmup onDone={onCompiled} />
+      <FitViewport />
     </Canvas>
   );
 }

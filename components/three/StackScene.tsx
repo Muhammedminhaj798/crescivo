@@ -6,7 +6,7 @@ import * as THREE from "three";
 import "./console";
 import { stack } from "@/lib/sceneBus";
 import { GL_FLAGS, type SceneEnv } from "./SceneMount";
-import { Warmup } from "./Warmup";
+import { FitViewport, Warmup } from "./helpers";
 
 const W = 4, D = 2.6, H = 0.07;
 const EMERALD = new THREE.Color("#00C878");
@@ -205,6 +205,7 @@ export default function StackScene({ onReady, reduced, active }: SceneEnv) {
         ))}
       </group>
       <Warmup onDone={onCompiled} />
+      <FitViewport />
     </Canvas>
   );
 }

@@ -32,6 +32,27 @@ export function Motion() {
       });
     }
 
+    // Marketing: the item crossing a line at 62% of the viewport drives the dot-matrix pattern. This is a
+    // state change, not motion, so it runs under reduced motion too (where CSS transitions are off).
+    const mk = document.querySelector<HTMLElement>("[data-marketing]");
+    if (mk) {
+      const matrix = mk.querySelector<SVGSVGElement>(".matrix")!;
+      const items = Array.from(mk.querySelectorAll<HTMLElement>(".mkt-item"));
+      mk.querySelector<HTMLElement>(".mkt-list")!.dataset.js = "";
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            matrix.dataset.active = String(items.indexOf(e.target as HTMLElement));
+            items.forEach((x) => (x.dataset.on = String(x === e.target)));
+          }
+        },
+        { rootMargin: "-61% 0px -38% 0px" },
+      );
+      items.forEach((it) => io.observe(it));
+      cleanups.push(() => io.disconnect());
+    }
+
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
       stack.explode = 1;
       return () => cleanups.forEach((c) => c());
@@ -119,25 +140,6 @@ export function Motion() {
           });
           tl.to(routes.slice(0, 2), { strokeDashoffset: 0, ease: "none", duration: 0.9 })
             .to(routes.slice(2), { strokeDashoffset: 0, ease: "power2.out", duration: 0.1 });
-        }
-
-        // Marketing: the item crossing the middle of the viewport drives the dot-matrix pattern.
-        const mk = document.querySelector<HTMLElement>("[data-marketing]");
-        if (mk) {
-          const matrix = mk.querySelector<SVGSVGElement>(".matrix")!;
-          const list = mk.querySelector<HTMLElement>(".mkt-list")!;
-          const items = $<HTMLElement>(".mkt-item", mk);
-          list.dataset.js = "";
-          items.forEach((it, i) =>
-            ScrollTrigger.create({
-              trigger: it, start: "top 62%", end: "bottom 62%",
-              onToggle: (self) => {
-                if (!self.isActive) return;
-                matrix.dataset.active = String(i);
-                items.forEach((x) => (x.dataset.on = String(x === it)));
-              },
-            }),
-          );
         }
 
         // Software: the stack separates as the section arrives.

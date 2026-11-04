@@ -165,7 +165,7 @@ export function Footer() {
   return (
     <footer className="border-t border-line bg-ink">
       <div className="wrap grid gap-12 py-16 md:grid-cols-12 md:py-20">
-        <div className="md:col-span-4">
+        <div className="md:col-span-12 lg:col-span-4">
           <a href="#top" aria-label="Crescivo Business Solutions — back to top" className="inline-block">
             <Logo className="h-10 w-auto text-paper" />
           </a>
@@ -173,7 +173,7 @@ export function Footer() {
             Your growth, our strategy. A business consulting &amp; technology partner.
           </p>
         </div>
-        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 md:col-span-5">
+        <nav aria-label="Footer" className="grid grid-cols-2 gap-8 md:col-span-8 lg:col-span-5">
           <div>
             <h2 className="t-label mb-4">Company</h2>
             <ul className="space-y-2.5">
@@ -191,7 +191,7 @@ export function Footer() {
             </ul>
           </div>
         </nav>
-        <div className="md:col-span-3">
+        <div className="md:col-span-4 lg:col-span-3">
           <h2 className="t-label mb-4">Get in touch</h2>
           <ul className="space-y-2.5">
             <li><a className="link-sweep hover:text-mint" href={SITE.phoneHref}>{SITE.phone}</a></li>

@@ -261,13 +261,13 @@ body {
 }
 
 /* ---------- Reduced motion ---------- */
+/* Remove motion outright rather than the usual 0.01ms trick: a near-zero duration still gives every element
+   an "all" transition, so any style change (e.g. the font swap) spawns hundreds of micro-transitions.
+   Every keyframe above ends on the element's natural style, so "none" leaves everything fully visible. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
+    animation: none !important;
+    transition: none !important;
   }
   html:not(.lenis) { scroll-behavior: auto; }
 }
